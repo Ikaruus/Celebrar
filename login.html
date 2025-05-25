@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login / Cadastro - Celebrar 🌈</title>
+  <link rel="stylesheet" href="styles.css">
+  <style></style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div id="formLogin" class="form-container">
+      <h2 class="text-center">Login</h2>
+      <form id="loginForm">
+        <div class="mb-3">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-control" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Senha</label>
+          <input type="password" class="form-control" name="senha" required>
+        </div>
+        <button type="submit" class="btn btn-pink w-100">Entrar</button>
+      </form>
+      <span class="toggle-link" onclick="mostrarCadastro()">Não tem conta? Cadastre-se</span>
+    </div>
+
+    <div id="formCadastro" class="form-container d-none">
+      <h2 class="text-center">Cadastro</h2>
+      <form id="cadastroForm">
+        <div class="mb-3">
+          <label class="form-label">Nome</label>
+          <input type="text" class="form-control" name="nome" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-control" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Senha</label>
+          <input type="password" class="form-control" name="senha" required>
+        </div>
+        <button type="submit" class="btn btn-pink w-100">Cadastrar</button>
+      </form>
+      <span class="toggle-link" onclick="mostrarLogin()">Já tem conta? Faça login</span>
+    </div>
+
+  </div>
+
+  <script>
+    function mostrarCadastro() {
+      document.getElementById('formLogin').classList.add('d-none');
+      document.getElementById('formCadastro').classList.remove('d-none');
+    }
+
+    function mostrarLogin() {
+      document.getElementById('formCadastro').classList.add('d-none');
+      document.getElementById('formLogin').classList.remove('d-none');
+    }
+
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    try {
+        const usuario = await AuthService.login(
+        this.email.value,
+        this.senha.value
+        );
+        window.location.href = 'index.html';
+    } catch (error) {
+        alert(error.message);
+    }
+    });
+
+    // Cadastro
+    document.getElementById('cadastroForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const formData = new FormData(this);
+      const nome = formData.get('nome');
+      const email = formData.get('email');
+      const senha = formData.get('senha');
+
+      let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+      if (usuarios.some(u => u.email === email)) {
+        alert('Este e-mail já está cadastrado!');
+        return;
+      }
+
+      const novoUsuario = { nome, email, senha };
+      usuarios.push(novoUsuario);
+      localStorage.setItem('usuarios', JSON.stringify(usuarios));
+      localStorage.setItem('usuarioAtual', JSON.stringify(novoUsuario));
+
+      alert('Cadastro realizado com sucesso!');
+      window.location.href = 'index.html';
+    });
+  </script>
+
+</body>
+</html>
