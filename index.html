@@ -15,27 +15,62 @@
   </header>
 
   <!-- MENU DE NAVEGAÇÃO -->
-  <nav id="menu" class="d-none navbar navbar-expand-lg navbar-light bg-light">
-    <a class="nav-link" href="#" onclick="UI.showSection('home', event)">Início</a>
-    <a class="nav-link" href="#" onclick="UI.showSection('agendamento', event)">Agendar Evento</a>
-    <a class="nav-link" href="#" onclick="UI.showSection('listar', event)">Meus Agendamentos</a>
-    <a class="nav-link" href="#" onclick="UI.showSection('eventosPublicos', event)">Eventos Públicos</a>
-    <a class="nav-link text-danger" href="#" onclick="logoutUsuario()">Sair</a>
+  <nav id="menu" class="d-none navbar navbar-expand-lg navbar-light bg-light nav justify-content-center py-3">
+    <a class="nav-link" href="#" data-section="home">Início</a>
+    <a class="nav-link" href="#" data-section="agendamento">Agendar Evento</a>
+    <a class="nav-link" href="#" data-section="listar">Meus Agendamentos</a>
+    <a class="nav-link" href="#" data-section="eventosPublicos">Eventos Públicos</a>
+    <a class="nav-link text-danger logout-btn" href="#">Sair</a>
   </nav>
 
   <main class="container my-5">
-    
+
     <!-- Seção: Início -->
-    <div id="home" class="fade-in">
-      <div class="text-center">
-        <img src="https://cdn.shopify.com/s/files/1/0469/4500/9826/files/banner_blog_novo_6.jpg?v=1687284218" 
+    <div id="home" class="d-none fade-in">
+      <h1 class="fw-bold text-center">Celebre com orgulho</h1>
+      <div class="sobre">
+            <img src="https://cdn.shopify.com/s/files/1/0469/4500/9826/files/banner_blog_novo_6.jpg?v=1687284218" 
              class="img-fluid rounded shadow mb-4" 
              alt="Evento LGBTQIA+" 
              style="max-height: 400px; object-fit: cover;">
-        <h2 class="fw-bold">Celebre com Orgulho</h2>
-        <p class="lead">Organize eventos inclusivos, autênticos e cheios de diversidade. Do seu jeito, com amor e orgulho.</p>
-      </div>
-    </div>
+        <blockquote class="blockquote">
+      <p>Celebrar a diversidade é reconhecer que cada identidade é válida e merece espaço, respeito e amor.</p>
+    </blockquote>
+
+        <img src="imagens/pexels-ketchumcommunity-1612754.jpg" 
+             class="img-fluid rounded shadow mb-4" 
+             alt="Evento LGBTQIA+" 
+             style="max-height: 400px; object-fit: cover;">
+    <p class="lead">O Celebrar é um espaço seguro e acolhedor para a organização de eventos virtuais e presenciais dedicados à comunidade LGBTQIA+. Aqui você pode divulgar encontros, workshops, rodas de conversa e celebrar com orgulho a sua identidade.</p>
+    
+    <h2 class="mt-4">O que significa LGBTQIA+?</h2>
+    <ul class="list-unstyled">
+      <li><strong>L</strong>: Lésbicas</li>
+      <li><strong>G</strong>: Gays</li>
+      <li><strong>B</strong>: Bissexuais</li>
+      <li><strong>T</strong>: Transgêneros</li>
+      <li><strong>Q</strong>: Queer</li>
+      <li><strong>I</strong>: Intersexuais</li>
+      <li><strong>A</strong>: Assexuais</li>
+      <li><strong>+</strong>: Outras identidades e expressões</li>
+    </ul>
+
+      <h2 class="mt-4 text-center"> A Parada do Orgulho LGBT+ </h2>
+        <img src="https://s2-g1.glbimg.com/XHNM34xC6oog7Cspw3_kHgfPWDo=/0x0:3840x2560/1008x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/s/c/ZAFZKISVaFndIKVBqWMg/img-9326-1-.jpg" 
+             class="img-fluid rounded shadow mb-4" 
+             alt="Evento LGBTQIA+" 
+             style="max-height: 400px; object-fit: cover;">
+    <p class="lead">Em sua 28ª edição, a Parada do Orgulho LGBT+ de São Paulo levou para Avenida Paulista o tema Basta De Negligência E Retrocesso No Legislativo: vote consciente por direito da população LGBT+. O evento aconteceu no dia 02 de junho de 2024, reafirmando nosso compromisso em combater o preconceito e apoiar representantes que promovam políticas públicas afirmativas e joguem luz em pautas sobre direitos humanos.</p>
+
+    <h2 class="mt-4 text-center">Como Participar?</h2>
+    <ul class="list-unstyled">
+      <li> Cadastre-se na plataforma.</li>
+      <li> Agende eventos públicos ou privados.</li>
+      <li> Participe de eventos organizados por outras pessoas.</li>
+      <li> Fortaleça sua rede de apoio.</li>
+    </ul>
+  </div>
+      
 
     <!-- Seção: Agendamento -->
     <div id="agendamento" class="d-none fade-in">
@@ -57,7 +92,7 @@
           <label class="form-label">Plataforma</label>
           <input type="text" class="form-control" name="plataforma" required>
         </div>
-        <button type="submit" class="btn btn-pink w-100">Agendar</button>
+        <button type="submit" class="btn btn-primary w-100">Agendar</button>
       </form>
     </div>
 
@@ -106,7 +141,7 @@
 
   </main>
 
-  <footer>
+  <footer class="text-center">
     &copy; 2025 Celebrar 🌈 – Todos os direitos reservados com amor.
   </footer>
 
@@ -115,23 +150,17 @@
   <script src="UI.js"></script>
 
   <script>
-    // ✅ Proteção de rota: só entra se estiver logado
+    // Proteção de rota: só entra se estiver logado
     const usuarioAtual = JSON.parse(localStorage.getItem('usuarioAtual'));
 
     if (!usuarioAtual) {
-      // Não logado → redireciona para login
       window.location.href = 'login.html';
     }
 
-    // ✅ Logout
-    function logoutUsuario() {
-      localStorage.removeItem('usuarioAtual');
-      alert('Logout realizado com sucesso!');
-      window.location.href = 'login.html';
-    }
-
-    // ✅ Inicialização do app
-    document.addEventListener('DOMContentLoaded', () => UI.init());
+    document.addEventListener('DOMContentLoaded', () => {
+      UI.init();
+      document.getElementById('formAgendar').addEventListener('submit', UI.handleAgendar.bind(UI));
+    });
   </script>
 
 </body>

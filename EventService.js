@@ -13,5 +13,9 @@ const EventService = {
     const eventos = this.getAll();
     eventos.splice(index, 1);
     localStorage.setItem('agendamentos', JSON.stringify(eventos));
+  },
+
+  saveAll(eventos) {
+  localStorage.setItem('agendamentos', JSON.stringify(eventos));
   }
 };
