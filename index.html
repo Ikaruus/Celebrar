@@ -90,7 +90,7 @@
           <input type="time" class="form-control" name="hora" required>
         </div>
         <div class="mb-3">
-          <label class="form-label">Plataforma</label>
+          <label class="form-label">Mais informaÇões</label>
           <input type="text" class="form-control" name="plataforma" required>
         </div>
         <button type="submit" class="btn btn-primary w-100">Agendar</button>
@@ -139,6 +139,19 @@
         </table>
       </div>
     </div>
+        <!-- Modal Detalhes do Evento -->
+    <div id="modalDetalhes" class="modal show d-none">
+      <div class="modal-content p-3">
+        <h2 class="text-primary">Detalhes do Evento</h2>
+        <p><strong>Nome:</strong> <span id="detalheNome"></span></p>
+        <p><strong>Criador:</strong> <span id="detalheCriador"></span></p>
+        <p><strong>Data:</strong> <span id="detalheData"></span></p>
+        <p><strong>Hora:</strong> <span id="detalheHora"></span></p>
+        <p><strong>Descrição:</strong> <span id="detalheDescricao"></span></p>
+        <button class="btn btn-primary mt-3" onclick="UI.fecharModalDetalhes()">Fechar</button>
+      </div>
+    </div>
+
 
   </main>
 
@@ -146,19 +159,14 @@
     &copy; 2025 Celebrar 🌈 – Todos os direitos reservados com amor.
   </footer>
 
-  <script src="EventService.js"></script>
-  <script src="auth.js"></script>
   <script src="UI.js"></script>
-
   <script>
-    // Proteção de rota: só entra se estiver logado
-    const usuarioAtual = JSON.parse(localStorage.getItem('usuarioAtual'));
-
-    if (!usuarioAtual) {
-      window.location.href = 'login.html';
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
+      const usuarioAtual = JSON.parse(localStorage.getItem('usuarioAtual'));
+      if (!usuarioAtual) {
+        window.location.href = 'login.html';
+        return;
+      }
       UI.init();
       document.getElementById('formAgendar').addEventListener('submit', UI.handleAgendar.bind(UI));
     });
